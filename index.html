@@ -212,7 +212,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       <h1>La PUCP también <em>compite</em> en esports.</h1>
       <p class="lead">Organizamos torneos, armamos equipos y conectamos a la comunidad gamer de la Católica con oportunidades académicas, sociales y profesionales.</p>
       <div class="ctas">
-        <a class="btn primary" href="#unete">Postula a la convocatoria</a>
+        <a class="btn primary" id="formBtn" href="#unete">Postula a la convocatoria</a>
         <a class="btn ghost" id="discordBtn" href="#unete">Entra al Discord</a>
       </div>
     </div>
@@ -322,7 +322,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
         <ul class="roles" id="roles"></ul>
       </div>
       <div class="contact">
-        <div class="c-row"><div><span>Postula</span><br><a href="https://www.instagram.com/esportspucp/" target="_blank" rel="noopener">Formulario en la bio de @esportspucp</a></div></div>
+        <div class="c-row"><div><span>Postula</span><br><a id="formLink" target="_blank" rel="noopener" href="#unete">Formulario de convocatoria · 2 min</a></div></div>
         <div class="c-row"><div><span>Discord</span><br><a id="discordLink" target="_blank" rel="noopener"></a></div></div>
         <div class="c-row"><div><span>Correo</span><br><a id="mailLink"></a></div><button class="copy" type="button" id="copyMail">Copiar</button></div>
         <div class="c-row"><div><span>Instagram · Threads</span><br><a href="https://www.instagram.com/esportspucp/" target="_blank" rel="noopener">@esportspucp</a></div></div>
@@ -346,6 +346,7 @@ const DATA = {
   updated: "2026-11-10",
   contact: {
     email: "epucp@gmail.com",
+    form: "https://docs.google.com/forms/d/1fq3m5qoiryTH7pDTBRJt0OIVOuZYY9PsAr62_j_ig04/viewform",
     discord: "https://discord.gg/a24eJCtgVq"
   },
   events: [
@@ -353,8 +354,8 @@ const DATA = {
       place: "Salón Z202, PUCP", host: "IEEE Computer Society PUCP · con difusión de e-PUCP",
       note: "Acceso libre. Sorteos, coffee y concurso de cosplay. Ahí lanzamos la convocatoria e-PUCP.", link: "https://luma.com/z0awdrc7", linkLabel: "Regístrate en Luma" },
     { title: "Convocatoria e-PUCP", kind: "Reclutamiento", start: "2026-11-14T00:00:00-05:00", end: "2026-11-27T23:59:00-05:00",
-      place: "Online · formulario en la bio de @esportspucp", host: "e-PUCP",
-      note: "Buscamos gente para contenido, eventos, alianzas y gestión." },
+      place: "Online · formulario de convocatoria", host: "e-PUCP",
+      note: "Buscamos gente para contenido, eventos, alianzas y gestión.", link: "https://docs.google.com/forms/d/1fq3m5qoiryTH7pDTBRJt0OIVOuZYY9PsAr62_j_ig04/viewform", linkLabel: "Postula aquí" },
     { title: "Bienvenida al equipo", kind: "Reunión online", start: "2026-12-03T19:00:00-05:00", end: "2026-12-04T23:59:00-05:00",
       place: "Online", host: "e-PUCP", dateLabel: "3 o 4 dic",
       note: "30 minutos para conocer las áreas y elegir una tarea." },
@@ -602,6 +603,7 @@ function renderUnete() {
   $("roles").innerHTML = DATA.roles.map(([k, v]) => `<li><b>${esc(k)}</b><span>${esc(v)}</span></li>`).join("");
   const d = $("discordLink"); d.href = DATA.contact.discord; d.textContent = DATA.contact.discord.replace("https://", "");
   $("discordBtn").href = DATA.contact.discord; $("discordBtn").target = "_blank"; $("discordBtn").rel = "noopener";
+  ["formBtn", "formLink"].forEach(k => { const a = $(k); a.href = DATA.contact.form; a.target = "_blank"; a.rel = "noopener"; });
   const m = $("mailLink"); m.href = "mailto:" + DATA.contact.email; m.textContent = DATA.contact.email;
   $("copyMail").addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(DATA.contact.email); $("copyMail").textContent = "Copiado"; }
