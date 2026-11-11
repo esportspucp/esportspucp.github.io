@@ -7,16 +7,24 @@
 <meta name="description" content="e-PUCP, la agrupación estudiantil que impulsa los esports en la PUCP: torneos, ranking, convocatoria y comunidad.">
 <meta property="og:title" content="e-PUCP Esports">
 <meta property="og:description" content="La PUCP también compite en esports. Torneos online, ranking y convocatoria abierta.">
-<meta name="theme-color" content="#070a1a">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%231b2f7a'/%3E%3Cpath fill='%23e9ecff' d='M2 2h4v1H2zM1 3h1v3H1zM6 3h1v1H6zM2 4h5v1H2zM2 6h4v1H2z'/%3E%3Crect x='6' y='1' width='1' height='1' fill='%23ff3fa4'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#032058">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:image" content="https://esportspucp.github.io/assets/og-image.png">
+<meta property="og:url" content="https://esportspucp.github.io/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Figtree:wght@400;500;600&family=Silkscreen&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Figtree:wght@400;500;600&family=Silkscreen&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#070a1a;--panel:#0e1430;--line:#1f2a55;--text:#e9ecff;--muted:#9aa3cc;
-  --magenta:#ff3fa4;--cyan:#4fd8ff;--ok:#47e6a0;--warn:#ffc857;
-  --display:"Chakra Petch","Segoe UI",system-ui,sans-serif;
+  /* Manual de marca e-PUCP: blanco #ffffff, azul #032058, negro #000000, énfasis amarillo #f7e207 */
+  --navy:#032058;
+  --ink:#010818;--panel:#06173d;--line:#16306b;--text:#ffffff;--muted:#a6b4d8;
+  --magenta:#f7e207;   /* énfasis (amarillo de marca) */
+  --cyan:#9cb8ff;      /* azul de marca aclarado para texto sobre fondo oscuro */
+  --ok:#47e6a0;--warn:#9cb8ff;
+  --display:"Outfit","Segoe UI",system-ui,sans-serif;
   --body:"Figtree",system-ui,-apple-system,sans-serif;
   --pixel:"Silkscreen",ui-monospace,monospace;
   color-scheme:dark;
@@ -39,25 +47,27 @@ h3{font-size:1.15rem;font-weight:600}
 section{padding:56px 0 8px}
 .sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
 .sec-head p{margin:0;max-width:62ch;color:var(--muted)}
-header{position:sticky;top:0;background:rgba(7,10,26,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
+header{position:sticky;top:0;background:rgba(1,8,24,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font:700 1.25rem var(--display)}
-.brand svg{width:28px;height:28px}
+.brand img{height:34px;width:auto;display:block}
 nav{display:flex;gap:18px;overflow-x:auto}
 nav a{color:var(--muted);text-decoration:none;font:500 .92rem var(--body);white-space:nowrap}
 nav a:hover{color:var(--text)}
 @media (max-width:720px){nav{display:none}}
-.hero{padding:56px 0 24px;display:grid;grid-template-columns:1.15fr 1fr;gap:36px;align-items:center}
+.hero{position:relative;padding:56px 0 24px;display:grid;grid-template-columns:1.15fr 1fr;gap:36px;align-items:center}
 @media (max-width:860px){.hero{grid-template-columns:1fr}}
+.hero::before{content:"";position:absolute;left:-60px;top:10px;width:420px;height:420px;background:url(assets/isotipo-blanco.png) center/contain no-repeat;opacity:.05;image-rendering:pixelated;pointer-events:none}
+.hero>*{position:relative}
 .hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:700;letter-spacing:-.01em}
-.hero h1 em{font-style:normal;color:var(--magenta);text-shadow:0 0 24px rgba(255,63,164,.45)}
+.hero h1 em{font-style:normal;color:var(--magenta);text-shadow:0 0 24px rgba(247,226,7,.45)}
 .hero p.lead{font-size:1.1rem;color:var(--muted);max-width:52ch;margin:18px 0 26px}
 .ctas{display:flex;flex-wrap:wrap;gap:12px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:6px;font:600 .95rem var(--display);text-decoration:none;letter-spacing:.02em;transition:transform .15s ease,box-shadow .15s ease}
-.btn.primary{background:var(--magenta);color:#14041a;box-shadow:0 0 0 1px var(--magenta),0 8px 28px rgba(255,63,164,.35)}
+.btn.primary{background:var(--magenta);color:#000;box-shadow:0 0 0 1px var(--magenta),0 8px 28px rgba(247,226,7,.35)}
 .btn.ghost{border:1px solid var(--cyan);color:var(--cyan)}
 .btn:hover{transform:translateY(-2px)}
-.match{background:linear-gradient(180deg,#121a3d,var(--panel));border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.match{background:linear-gradient(180deg,var(--navy),var(--panel));border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45)}
 .match-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font:400 .72rem var(--pixel);color:var(--muted)}
 .live{display:inline-flex;align-items:center;gap:6px;color:var(--ok)}
 .live i{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor;animation:pulse 1.6s infinite}
@@ -108,7 +118,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--disp
 .h-item b{font-family:var(--display);font-weight:600}
 .h-item p{margin:2px 0 0;font-size:.86rem;color:var(--muted)}
 .allies{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.ally{font:500 .85rem var(--body);padding:6px 12px;border-radius:999px;background:#151d44;border:1px solid var(--line)}
+.ally{font:500 .85rem var(--body);padding:6px 12px;border-radius:999px;background:var(--navy);border:1px solid var(--line)}
 .road{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
 @media (max-width:860px){.road{grid-template-columns:1fr}}
 .phase{padding:16px;border-top:3px solid var(--line);position:relative}
@@ -122,7 +132,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--disp
 .mv .box p{margin:0;color:var(--muted)}
 .values{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .values span{font:600 .85rem var(--display);padding:6px 12px;border:1px solid var(--cyan);color:var(--cyan);border-radius:4px}
-.join{background:linear-gradient(135deg,#1a0d33,#0e1430 60%);border:1px solid var(--line);border-radius:12px;padding:28px;display:grid;grid-template-columns:1.2fr 1fr;gap:28px}
+.join{background:linear-gradient(135deg,var(--navy),var(--panel) 65%);border:1px solid var(--line);border-radius:12px;padding:28px;display:grid;grid-template-columns:1.2fr 1fr;gap:28px}
 @media (max-width:760px){.join{grid-template-columns:1fr;padding:20px}}
 .roles{display:grid;gap:10px;margin:16px 0 0;padding:0;list-style:none}
 .roles li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
@@ -135,11 +145,11 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--disp
 .copy:hover{color:var(--text);border-color:var(--muted)}
 /* trayectoria */
 .played-sum{display:flex;flex-wrap:wrap;gap:32px;margin-bottom:22px}
-.played-sum b{display:block;font:700 2.6rem/1 var(--display);color:var(--magenta);text-shadow:0 0 22px rgba(255,63,164,.4)}
+.played-sum b{display:block;font:700 2.6rem/1 var(--display);color:var(--magenta);text-shadow:0 0 22px rgba(247,226,7,.4)}
 .played-sum span{font:400 .66rem var(--pixel);color:var(--muted)}
 .played{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-.card-p{background:linear-gradient(160deg,#1a0d33,var(--panel) 70%);border:1px solid var(--line);border-left:3px solid var(--magenta);border-radius:10px;padding:18px 18px 16px;display:grid;gap:6px;align-content:start;transition:transform .15s ease,box-shadow .15s ease}
-.card-p:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(255,63,164,.18)}
+.card-p{background:linear-gradient(160deg,var(--navy),var(--panel) 75%);border:1px solid var(--line);border-left:3px solid var(--magenta);border-radius:10px;padding:18px 18px 16px;display:grid;gap:6px;align-content:start;transition:transform .15s ease,box-shadow .15s ease}
+.card-p:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(247,226,7,.18)}
 .card-p .idx{font:400 .66rem var(--pixel);color:var(--magenta)}
 .card-p b{font:600 1.1rem/1.25 var(--display)}
 .card-p p{margin:0;color:var(--muted);font-size:.9rem}
@@ -170,7 +180,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--disp
 .g-top small{display:block;color:var(--muted);font-size:.8rem}
 .chip.test{color:var(--warn);font-size:.55rem;padding:2px 6px;margin-left:4px;vertical-align:2px}
 .vote{flex:none;background:none;border:1px solid var(--magenta);color:var(--magenta);border-radius:4px;padding:6px 10px;font:600 .78rem var(--display);cursor:pointer;transition:background .15s ease}
-.vote:hover{background:rgba(255,63,164,.12)}
+.vote:hover{background:rgba(247,226,7,.12)}
 .vote.on{border-color:var(--ok);color:var(--ok);cursor:default;background:none}
 .g-bar{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
 .track{height:6px;background:var(--ink);border-radius:3px;overflow:hidden}
@@ -180,16 +190,15 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--disp
 .vote-note{margin:12px 0 0;font-size:.88rem}
 footer{padding:48px 0 40px;color:var(--muted);font-size:.85rem}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:20px}
+.foot-brand{display:inline-flex;align-items:center;gap:10px}
+.foot-brand img{image-rendering:pixelated;opacity:.85}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header>
   <div class="wrap bar">
-    <a class="brand" href="#inicio" aria-label="e-PUCP inicio">
-      <svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect width="8" height="8" fill="#1b2f7a"/><path fill="#e9ecff" d="M2 2h4v1H2zM1 3h1v3H1zM6 3h1v1H6zM2 4h5v1H2zM2 6h4v1H2z"/><rect x="6" y="1" width="1" height="1" fill="#ff3fa4"/></svg>
-      e-PUCP
-    </a>
+    <a class="brand" href="#inicio" aria-label="e-PUCP inicio"><img src="assets/logo-e-pucp-blanco.png" alt="e-PUCP" width="131" height="34"></a>
     <nav aria-label="Secciones">
       <a href="#agenda">Agenda</a><a href="#torneos">Torneos</a><a href="#trayectoria">Trayectoria</a><a href="#crecimiento">Crecimiento</a><a href="#ruta">Ruta</a><a href="#nosotros">Nosotros</a><a href="#unete">Únete</a>
     </nav>
@@ -324,7 +333,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 
 <footer>
   <div class="wrap">
-    <span>e-PUCP · Agrupación estudiantil de esports de la PUCP</span>
+    <span class="foot-brand"><img src="assets/isotipo-blanco.png" alt="" width="28" height="28">e-PUCP · Agrupación estudiantil de esports de la PUCP</span>
     <span id="updated"></span>
   </div>
 </footer>
