@@ -99,8 +99,7 @@ th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
 th{font:400 .66rem var(--pixel);color:var(--muted)}
 td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--display);font-weight:600;color:var(--cyan)}
 .empty{border:1px dashed var(--line);border-radius:6px;padding:16px;color:var(--muted);font-size:.92rem;text-align:center}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-@media (max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px}
 .kpi b{display:block;font:700 2rem/1.1 var(--display);font-variant-numeric:tabular-nums}
 .kpi span{color:var(--muted);font-size:.88rem}
@@ -137,6 +136,30 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--disp
 .c-row a,.c-row code{font:500 .95rem var(--body);word-break:break-all}
 .copy{background:none;border:1px solid var(--line);color:var(--muted);border-radius:4px;padding:4px 8px;font:400 .6rem var(--pixel);cursor:pointer}
 .copy:hover{color:var(--text);border-color:var(--muted)}
+/* trayectoria */
+.played-sum{display:flex;flex-wrap:wrap;gap:32px;margin-bottom:22px}
+.played-sum b{display:block;font:700 2.6rem/1 var(--display);color:var(--magenta);text-shadow:0 0 22px rgba(255,63,164,.4)}
+.played-sum span{font:400 .66rem var(--pixel);color:var(--muted)}
+.played{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card-p{background:linear-gradient(160deg,#1a0d33,var(--panel) 70%);border:1px solid var(--line);border-left:3px solid var(--magenta);border-radius:10px;padding:18px 18px 16px;display:grid;gap:6px;align-content:start;transition:transform .15s ease,box-shadow .15s ease}
+.card-p:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(255,63,164,.18)}
+.card-p .idx{font:400 .66rem var(--pixel);color:var(--magenta)}
+.card-p b{font:600 1.1rem/1.25 var(--display)}
+.card-p p{margin:0;color:var(--muted);font-size:.9rem}
+/* gráficos */
+.charts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:16px}
+@media (max-width:760px){.charts{grid-template-columns:1fr}}
+.charts.empty{display:block}
+.chart{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;position:relative}
+.chart h3{font-size:1rem}
+.chart .sub{font:400 .6rem var(--pixel);color:var(--muted)}
+.chart svg{width:100%;height:auto;display:block;margin-top:10px;overflow:visible;touch-action:pan-y}
+.chart svg text{font-family:var(--body)}
+.chart .tip{position:absolute;pointer-events:none;background:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:.82rem;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));opacity:0;transition:opacity .1s;z-index:2}
+.chart .tip b{font-family:var(--display);font-weight:600}
+.chart .tip span{color:var(--muted)}
+.chart details{margin-top:8px;font-size:.85rem;color:var(--muted)}
+.chart summary{cursor:pointer;font:400 .6rem var(--pixel)}
 footer{padding:48px 0 40px;color:var(--muted);font-size:.85rem}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:20px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -150,7 +173,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       e-PUCP
     </a>
     <nav aria-label="Secciones">
-      <a href="#agenda">Agenda</a><a href="#torneos">Torneos</a><a href="#crecimiento">Crecimiento</a><a href="#ruta">Ruta</a><a href="#nosotros">Nosotros</a><a href="#unete">Únete</a>
+      <a href="#agenda">Agenda</a><a href="#torneos">Torneos</a><a href="#trayectoria">Trayectoria</a><a href="#crecimiento">Crecimiento</a><a href="#ruta">Ruta</a><a href="#nosotros">Nosotros</a><a href="#unete">Únete</a>
     </nav>
   </div>
 </header>
@@ -195,7 +218,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
     <div class="sec-head">
       <div class="eyebrow">Circuito e-PUCP</div>
       <h2>Torneos rotativos, todo online</h2>
-      <p>Cada torneo cambia de plataforma y en cada vuelta cambia el juego. Todos suman puntos a un ranking que lleva a la liga interna PUCP y a los equipos representativos.</p>
+      <p>Cada torneo cambia de plataforma y en cada vuelta cambia el juego. Queremos activar la comunidad y conocer a los jugadores de la Católica: arma tu equipo, compite por premios en efectivo y suma puntos en el ranking e-PUCP.</p>
     </div>
     <div class="rot" id="rotation"></div>
     <div class="split">
@@ -219,6 +242,16 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
     </div>
   </section>
 
+  <section id="trayectoria">
+    <div class="sec-head">
+      <div class="eyebrow">Trayectoria</div>
+      <h2>Lo que ya jugamos</h2>
+      <p>Torneos, lobbies y eventos que organizamos o en los que fuimos parte, junto a agrupaciones, facultades y la Federación Peruana de Esports.</p>
+    </div>
+    <div class="played-sum" id="playedSum"></div>
+    <div class="played" id="history"></div>
+  </section>
+
   <section id="crecimiento">
     <div class="sec-head">
       <div class="eyebrow">Crecimiento</div>
@@ -226,8 +259,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       <p id="kpiDate"></p>
     </div>
     <div class="kpis" id="kpis"></div>
-    <h3 style="margin-top:28px">Lo que ya jugamos</h3>
-    <div class="hist" id="history"></div>
+    <div class="charts" id="charts"></div>
     <h3 style="margin-top:28px">Con quiénes hemos trabajado</h3>
     <div class="allies" id="allies"></div>
   </section>
@@ -309,19 +341,29 @@ const DATA = {
     { n: "Torneo 4", plat: "Móvil", games: ["Clash Royale", "Brawl Stars / Mobile Legends"] }
   ],
   format: [
-    ["Cupos", "16 jugadores o equipos"],
+    ["Cupos", "16 equipos"],
+    ["Inscripción", "S/ 5 por persona · equipo de 5 + 1 suplente: S/ 30"],
+    ["Premios", "En efectivo · último torneo: S/ 150 al 1.er puesto y S/ 50 al 2.º"],
     ["Bracket", "Eliminación directa · final al mejor de 3"],
     ["Duración", "2 horas como máximo"],
-    ["Inscripción", "Formulario con correo PUCP"],
-    ["Premios", "Certificado, post del campeón y puntos"]
+    ["Registro", "Formulario con correo PUCP"]
   ],
   points: [["Campeón", 10], ["Finalista", 7], ["Semifinal", 5], ["Cuartos", 3], ["Participación", 1]],
   ranking: [], // ej.: { name: "Jugador", pts: 10 }
   kpis: [
     { v: "1,928", l: "seguidores en Instagram", s: "al 10 nov 2026" },
     { v: "26", l: "publicaciones", s: "al 10 nov 2026" },
-    { v: "6", l: "aliados con los que hemos trabajado", s: "agrupaciones, facultades y federación" },
-    { v: "2", l: "personas en el equipo núcleo", s: "meta: 10 para dic 2026", goal: 10 }
+    { v: "6", l: "aliados con los que hemos trabajado", s: "agrupaciones, facultades y federación" }
+  ],
+  // Gráficos de crecimiento. Cada punto: { d: "AAAA-MM-DD", v: número } (o { l: "etiqueta", v: número }).
+  // Un gráfico aparece en la web cuando su serie tiene 2 puntos o más.
+  growth: [
+    { id: "ig-followers", title: "Seguidores en Instagram", type: "line", source: "Instagram", points: [{ d: "2026-11-10", v: 1928 }] },
+    { id: "ig-reach", title: "Cuentas alcanzadas en Instagram", type: "bar", source: "Instagram · por mes", points: [] },
+    { id: "ig-interactions", title: "Interacciones en Instagram", type: "bar", source: "Instagram · por mes", points: [] },
+    { id: "discord", title: "Miembros en Discord", type: "line", source: "Discord", points: [] },
+    { id: "whatsapp", title: "Comunidad de WhatsApp", type: "line", source: "WhatsApp", points: [] },
+    { id: "players", title: "Jugadores inscritos por torneo", type: "bar", source: "Formularios de inscripción", points: [] }
   ],
   history: [
     { t: "Torneos de Super Smash Bros", d: "Con Ukato no Sekai y GDP" },
@@ -427,8 +469,81 @@ function renderCrecimiento() {
     c.innerHTML = `<b>${esc(k.v)}</b><span>${esc(k.l)}</span>${bar}<small>${esc(k.s)}</small>`;
     $("kpis").appendChild(c);
   });
-  DATA.history.forEach(h => $("history").appendChild(el("div", "h-item", `<b>${esc(h.t)}</b><p>${esc(h.d)}</p>`)));
   DATA.allies.forEach(a => $("allies").appendChild(el("span", "ally", esc(a))));
+  renderCharts();
+}
+
+function renderTrayectoria() {
+  $("playedSum").innerHTML = `<div><b>${DATA.history.length}</b><span>actividades</span></div><div><b>${DATA.allies.length}</b><span>aliados</span></div>`;
+  DATA.history.forEach((h, i) => $("history").appendChild(el("article", "card-p",
+    `<span class="idx">#${String(i + 1).padStart(2, "0")}</span><b>${esc(h.t)}</b><p>${esc(h.d)}</p>`)));
+}
+
+/* ===================== gráficos ===================== */
+const fmtNum = n => Number(n).toLocaleString("es-PE");
+const niceStep = raw => { const pow = 10 ** Math.floor(Math.log10(raw || 1)); return [1, 2, 2.5, 5, 10].map(m => m * pow).find(x => x >= raw); };
+
+function renderCharts() {
+  const box = $("charts");
+  const ready = DATA.growth.filter(g => g.points.length >= 2);
+  if (!ready.length) {
+    box.className = "charts empty";
+    box.innerHTML = `<div class="empty">Aquí van los gráficos de crecimiento de nuestras redes y torneos. Se activan conforme registramos los datos de cada mes.</div>`;
+    return;
+  }
+  ready.forEach(g => box.appendChild(chartCard(g)));
+}
+
+function chartCard(g) {
+  const W = 560, H = 230, L = 52, R = 16, T = 22, B = 30, iw = W - L - R, ih = H - T - B;
+  const pts = g.points.map(p => ({ v: p.v, lab: p.l || fmtDay(p.d + "T12:00:00-05:00") }));
+  const vals = pts.map(p => p.v), max = Math.max(...vals), min = Math.min(...vals);
+  let lo, hi, step;
+  if (g.type === "bar") { step = niceStep(max / 4); lo = 0; hi = Math.ceil(max / step) * step || step; }
+  else { step = niceStep(((max - min) || max * 0.1 || 1) / 4); lo = Math.floor(min / step) * step; hi = Math.ceil(max / step) * step; if (hi === lo) hi += step; }
+  const y = v => T + ih * (1 - (v - lo) / (hi - lo));
+  const n = pts.length, slot = iw / n;
+  const x = i => g.type === "bar" ? L + slot * (i + 0.5) : L + (n === 1 ? iw / 2 : iw * i / (n - 1));
+  let svg = "";
+  for (let v = lo; v <= hi + step / 2; v += step) {
+    const yy = y(v).toFixed(1);
+    svg += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" stroke="var(--line)" stroke-width="1"/><text x="${L - 8}" y="${+yy + 4}" text-anchor="end" fill="var(--muted)" font-size="11">${fmtNum(v)}</text>`;
+  }
+  const every = Math.ceil(n / 6);
+  pts.forEach((p, i) => { if (i % every === 0 || i === n - 1) svg += `<text x="${x(i).toFixed(1)}" y="${H - 8}" text-anchor="middle" fill="var(--muted)" font-size="11">${esc(p.lab)}</text>`; });
+  if (g.type === "bar") {
+    const bw = Math.min(36, slot * 0.6), yb = y(0), r = 4;
+    pts.forEach((p, i) => {
+      const x0 = x(i) - bw / 2, x1 = x(i) + bw / 2, yt = Math.min(y(p.v), yb - r);
+      svg += `<path class="mk" data-i="${i}" fill="var(--magenta)" d="M${x0} ${yb}V${yt + r}Q${x0} ${yt} ${x0 + r} ${yt}H${x1 - r}Q${x1} ${yt} ${x1} ${yt + r}V${yb}Z"/>`;
+    });
+  } else {
+    svg += `<polyline fill="none" stroke="var(--cyan)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="${pts.map((p, i) => `${x(i).toFixed(1)},${y(p.v).toFixed(1)}`).join(" ")}"/>`;
+    pts.forEach((p, i) => svg += `<circle class="mk" data-i="${i}" cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="4" fill="var(--cyan)" stroke="var(--panel)" stroke-width="2"/>`);
+  }
+  const last = pts[n - 1];
+  svg += `<text x="${x(n - 1).toFixed(1)}" y="${(y(last.v) - 10).toFixed(1)}" text-anchor="${g.type === "bar" ? "middle" : "end"}" fill="var(--text)" font-size="12" font-weight="600">${fmtNum(last.v)}</text>`;
+  pts.forEach((p, i) => svg += `<rect class="hit" data-i="${i}" x="${(g.type === "bar" ? x(i) - slot / 2 : x(i) - Math.max(slot, 24) / 2).toFixed(1)}" y="${T}" width="${(g.type === "bar" ? slot : Math.max(slot, 24)).toFixed(1)}" height="${ih}" fill="transparent"/>`);
+
+  const card = el("div", "chart");
+  const summary = `${g.title}: de ${fmtNum(pts[0].v)} (${pts[0].lab}) a ${fmtNum(last.v)} (${last.lab})`;
+  card.innerHTML = `<h3>${esc(g.title)}</h3><span class="sub">${esc(g.source)}</span>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(summary)}">${svg}</svg>
+    <div class="tip" role="status"></div>
+    <details><summary>Ver datos</summary><table><tbody>${pts.map(p => `<tr><td>${esc(p.lab)}</td><td class="num">${fmtNum(p.v)}</td></tr>`).join("")}</tbody></table></details>`;
+  const tip = card.querySelector(".tip"), sv = card.querySelector("svg");
+  const show = i => {
+    const p = pts[i], sr = sv.getBoundingClientRect(), cr = card.getBoundingClientRect();
+    tip.innerHTML = `<span>${esc(p.lab)}</span> · <b>${fmtNum(p.v)}</b>`;
+    tip.style.left = (sr.left - cr.left + x(i) / W * sr.width) + "px";
+    tip.style.top = (sr.top - cr.top + y(p.v) / H * sr.height) + "px";
+    tip.style.opacity = 1;
+    card.querySelectorAll(".mk").forEach(m => m.style.opacity = +m.dataset.i === i ? 1 : 0.45);
+  };
+  const hide = () => { tip.style.opacity = 0; card.querySelectorAll(".mk").forEach(m => m.style.opacity = 1); };
+  card.querySelectorAll(".hit").forEach(h => { h.addEventListener("pointerenter", () => show(+h.dataset.i)); h.addEventListener("click", () => show(+h.dataset.i)); });
+  sv.addEventListener("pointerleave", hide);
+  return card;
 }
 
 function renderRuta() {
@@ -451,7 +566,7 @@ function renderUnete() {
   $("updated").textContent = "Actualizado: " + fmtDay(DATA.updated + "T12:00:00-05:00") + " 2026";
 }
 
-renderAgenda(); renderTorneos(); renderCrecimiento(); renderRuta(); renderUnete();
+renderAgenda(); renderTorneos(); renderTrayectoria(); renderCrecimiento(); renderRuta(); renderUnete();
 </script>
 </body>
 </html>
