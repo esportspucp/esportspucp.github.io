@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>e-PUCP Esports</title>
+<meta name="description" content="e-PUCP, la agrupación estudiantil que impulsa los esports en la PUCP: torneos, ranking, convocatoria y comunidad.">
+<meta property="og:title" content="e-PUCP Esports">
+<meta property="og:description" content="La PUCP también compite en esports. Torneos online, ranking y convocatoria abierta.">
+<meta name="theme-color" content="#070a1a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%231b2f7a'/%3E%3Cpath fill='%23e9ecff' d='M2 2h4v1H2zM1 3h1v3H1zM6 3h1v1H6zM2 4h5v1H2zM2 6h4v1H2z'/%3E%3Crect x='6' y='1' width='1' height='1' fill='%23ff3fa4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Figtree:wght@400;500;600&family=Silkscreen&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#070a1a;--panel:#0e1430;--line:#1f2a55;--text:#e9ecff;--muted:#9aa3cc;
+  --magenta:#ff3fa4;--cyan:#4fd8ff;--ok:#47e6a0;--warn:#ffc857;
+  --display:"Chakra Petch","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,sans-serif;
+  --pixel:"Silkscreen",ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ink);color:var(--text);font:400 16px/1.6 var(--body);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;background-attachment:fixed;background-position:-1px -1px}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,transparent 0%,var(--ink) 70%);pointer-events:none;z-index:0}
+main,header,footer{position:relative;z-index:1}
+a{color:var(--cyan)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+h2{font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700}
+h3{font-size:1.15rem;font-weight:600}
+.eyebrow{font:400 .72rem/1 var(--pixel);letter-spacing:.08em;color:var(--magenta);text-transform:uppercase}
+.muted{color:var(--muted)}
+section{padding:56px 0 8px}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.sec-head p{margin:0;max-width:62ch;color:var(--muted)}
+header{position:sticky;top:0;background:rgba(7,10,26,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font:700 1.25rem var(--display)}
+.brand svg{width:28px;height:28px}
+nav{display:flex;gap:18px;overflow-x:auto}
+nav a{color:var(--muted);text-decoration:none;font:500 .92rem var(--body);white-space:nowrap}
+nav a:hover{color:var(--text)}
+@media (max-width:720px){nav{display:none}}
+.hero{padding:56px 0 24px;display:grid;grid-template-columns:1.15fr 1fr;gap:36px;align-items:center}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:700;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--magenta);text-shadow:0 0 24px rgba(255,63,164,.45)}
+.hero p.lead{font-size:1.1rem;color:var(--muted);max-width:52ch;margin:18px 0 26px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:6px;font:600 .95rem var(--display);text-decoration:none;letter-spacing:.02em;transition:transform .15s ease,box-shadow .15s ease}
+.btn.primary{background:var(--magenta);color:#14041a;box-shadow:0 0 0 1px var(--magenta),0 8px 28px rgba(255,63,164,.35)}
+.btn.ghost{border:1px solid var(--cyan);color:var(--cyan)}
+.btn:hover{transform:translateY(-2px)}
+.match{background:linear-gradient(180deg,#121a3d,var(--panel));border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.match-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font:400 .72rem var(--pixel);color:var(--muted)}
+.live{display:inline-flex;align-items:center;gap:6px;color:var(--ok)}
+.live i{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.match-body{padding:20px 16px 18px;display:grid;gap:14px}
+.match-body h3{font-size:1.5rem}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.95rem}
+.meta dt{color:var(--muted);font:400 .7rem var(--pixel);padding-top:4px}
+.meta dd{margin:0}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.count div{background:var(--ink);border:1px solid var(--line);border-radius:6px;padding:10px 4px;text-align:center}
+.count b{display:block;font:700 1.6rem/1 var(--display);font-variant-numeric:tabular-nums;color:var(--cyan)}
+.count span{font:400 .62rem var(--pixel);color:var(--muted)}
+.match-note{font-size:.88rem;color:var(--muted);margin:0}
+.timeline{display:grid;gap:12px}
+.ev{display:grid;grid-template-columns:110px 1fr auto;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:8px;padding:14px 16px}
+.ev.now{border-left-color:var(--ok)}
+.ev.next{border-left-color:var(--magenta)}
+.ev.done{opacity:.6}
+.ev .date{font:700 1rem var(--display);color:var(--cyan)}
+.ev p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+.chip{font:400 .62rem var(--pixel);padding:5px 8px;border-radius:4px;border:1px solid currentColor;white-space:nowrap}
+.chip.now{color:var(--ok)} .chip.next{color:var(--magenta)} .chip.soon{color:var(--muted)} .chip.done{color:var(--muted)}
+@media (max-width:600px){.ev{grid-template-columns:1fr;gap:6px}.ev .chip{justify-self:start}}
+.rot{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:860px){.rot{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:440px){.rot{grid-template-columns:1fr}}
+.slot{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;display:grid;gap:8px;align-content:start}
+.slot .n{font:400 .68rem var(--pixel);color:var(--muted)}
+.slot h3{color:var(--text)}
+.slot .plat{font:600 .8rem var(--display);color:var(--cyan);letter-spacing:.06em;text-transform:uppercase}
+.slot ul{margin:0;padding-left:18px;color:var(--muted);font-size:.92rem}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media (max-width:760px){.split{grid-template-columns:1fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px}
+.box h3{margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+th{font:400 .66rem var(--pixel);color:var(--muted)}
+td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--display);font-weight:600;color:var(--cyan)}
+.empty{border:1px dashed var(--line);border-radius:6px;padding:16px;color:var(--muted);font-size:.92rem;text-align:center}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px}
+.kpi b{display:block;font:700 2rem/1.1 var(--display);font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:.88rem}
+.kpi small{display:block;font:400 .6rem var(--pixel);color:var(--muted);margin-top:8px}
+.prog{height:10px;background:var(--ink);border:1px solid var(--line);border-radius:5px;overflow:hidden;margin-top:10px}
+.prog i{display:block;height:100%;background:var(--magenta)}
+.hist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:16px}
+.h-item{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.h-item b{font-family:var(--display);font-weight:600}
+.h-item p{margin:2px 0 0;font-size:.86rem;color:var(--muted)}
+.allies{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.ally{font:500 .85rem var(--body);padding:6px 12px;border-radius:999px;background:#151d44;border:1px solid var(--line)}
+.road{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+@media (max-width:860px){.road{grid-template-columns:1fr}}
+.phase{padding:16px;border-top:3px solid var(--line);position:relative}
+.phase.on{border-top-color:var(--magenta)}
+.phase .when{font:400 .64rem var(--pixel);color:var(--muted)}
+.phase h3{margin:6px 0 4px;font-size:1.02rem}
+.phase p{margin:0;color:var(--muted);font-size:.9rem}
+@media (max-width:860px){.phase{border-top:0;border-left:3px solid var(--line)}.phase.on{border-left-color:var(--magenta)}}
+.mv{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.mv{grid-template-columns:1fr}}
+.mv .box p{margin:0;color:var(--muted)}
+.values{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.values span{font:600 .85rem var(--display);padding:6px 12px;border:1px solid var(--cyan);color:var(--cyan);border-radius:4px}
+.join{background:linear-gradient(135deg,#1a0d33,#0e1430 60%);border:1px solid var(--line);border-radius:12px;padding:28px;display:grid;grid-template-columns:1.2fr 1fr;gap:28px}
+@media (max-width:760px){.join{grid-template-columns:1fr;padding:20px}}
+.roles{display:grid;gap:10px;margin:16px 0 0;padding:0;list-style:none}
+.roles li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.roles li b{font:400 .7rem var(--pixel);color:var(--magenta);padding-top:5px}
+.contact{display:grid;gap:12px;align-content:start}
+.c-row{background:var(--ink);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.c-row span{font:400 .64rem var(--pixel);color:var(--muted)}
+.c-row a,.c-row code{font:500 .95rem var(--body);word-break:break-all}
+.copy{background:none;border:1px solid var(--line);color:var(--muted);border-radius:4px;padding:4px 8px;font:400 .6rem var(--pixel);cursor:pointer}
+.copy:hover{color:var(--text);border-color:var(--muted)}
+footer{padding:48px 0 40px;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:20px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#inicio" aria-label="e-PUCP inicio">
+      <svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><rect width="8" height="8" fill="#1b2f7a"/><path fill="#e9ecff" d="M2 2h4v1H2zM1 3h1v3H1zM6 3h1v1H6zM2 4h5v1H2zM2 6h4v1H2z"/><rect x="6" y="1" width="1" height="1" fill="#ff3fa4"/></svg>
+      e-PUCP
+    </a>
+    <nav aria-label="Secciones">
+      <a href="#agenda">Agenda</a><a href="#torneos">Torneos</a><a href="#crecimiento">Crecimiento</a><a href="#ruta">Ruta</a><a href="#nosotros">Nosotros</a><a href="#unete">Únete</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="inicio">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Agrupación estudiantil · PUCP</div>
+      <h1>La PUCP también <em>compite</em> en esports.</h1>
+      <p class="lead">Organizamos torneos, armamos equipos y conectamos a la comunidad gamer de la Católica con oportunidades académicas, sociales y profesionales.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#unete">Postula a la convocatoria</a>
+        <a class="btn ghost" id="discordBtn" href="#unete">Entra al Discord</a>
+      </div>
+    </div>
+    <article class="match" aria-labelledby="nextTitle">
+      <div class="match-top"><span id="nextKind">Próximo evento</span><span class="live" id="nextState"><i></i>Inscripción libre</span></div>
+      <div class="match-body">
+        <h3 id="nextTitle"></h3>
+        <dl class="meta" id="nextMeta"></dl>
+        <div class="count" id="count" aria-live="polite">
+          <div><b id="cd-d">00</b><span>días</span></div>
+          <div><b id="cd-h">00</b><span>horas</span></div>
+          <div><b id="cd-m">00</b><span>min</span></div>
+          <div><b id="cd-s">00</b><span>seg</span></div>
+        </div>
+        <p class="match-note" id="nextNote"></p>
+      </div>
+    </article>
+  </div>
+
+  <section id="agenda">
+    <div class="sec-head">
+      <div class="eyebrow">Agenda</div>
+      <h2>Lo que se viene</h2>
+      <p>Las fechas se actualizan conforme las confirmamos. El estado de cada actividad cambia solo según la fecha de hoy.</p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <section id="torneos">
+    <div class="sec-head">
+      <div class="eyebrow">Circuito e-PUCP</div>
+      <h2>Torneos rotativos, todo online</h2>
+      <p>Cada torneo cambia de plataforma y en cada vuelta cambia el juego. Todos suman puntos a un ranking que lleva a la liga interna PUCP y a los equipos representativos.</p>
+    </div>
+    <div class="rot" id="rotation"></div>
+    <div class="split">
+      <div class="box">
+        <h3>Formato</h3>
+        <table>
+          <tbody id="format"></tbody>
+        </table>
+      </div>
+      <div class="box">
+        <h3>Puntos del ranking</h3>
+        <table>
+          <thead><tr><th>Resultado</th><th style="text-align:right">Pts</th></tr></thead>
+          <tbody id="points"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="box" style="margin-top:16px">
+      <h3>Ranking e-PUCP</h3>
+      <div id="ranking"></div>
+    </div>
+  </section>
+
+  <section id="crecimiento">
+    <div class="sec-head">
+      <div class="eyebrow">Crecimiento</div>
+      <h2>Cómo vamos</h2>
+      <p id="kpiDate"></p>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <h3 style="margin-top:28px">Lo que ya jugamos</h3>
+    <div class="hist" id="history"></div>
+    <h3 style="margin-top:28px">Con quiénes hemos trabajado</h3>
+    <div class="allies" id="allies"></div>
+  </section>
+
+  <section id="ruta">
+    <div class="sec-head">
+      <div class="eyebrow">Planificación</div>
+      <h2>Hoja de ruta</h2>
+      <p>Primero, formar el equipo. Después, torneos y liga. La meta es ser una agrupación competitiva que forma en valores a través de los esports.</p>
+    </div>
+    <div class="road" id="road"></div>
+  </section>
+
+  <section id="nosotros">
+    <div class="sec-head">
+      <div class="eyebrow">Nosotros</div>
+      <h2>Por qué existimos</h2>
+    </div>
+    <div class="mv">
+      <div class="box"><h3>Misión</h3><p>Somos la agrupación estudiantil encargada de impulsar y desarrollar los esports en la Pontificia Universidad Católica del Perú, promoviendo la formación integral, la colaboración efectiva y el desarrollo de habilidades personales y profesionales entre los estudiantes.</p></div>
+      <div class="box"><h3>Visión</h3><p>Convertirnos en la principal referencia universitaria de esports en el Perú, consolidando a la PUCP como un espacio de formación integral, innovación y liderazgo que conecte la pasión por los esports con oportunidades académicas, sociales y profesionales.</p></div>
+    </div>
+    <div class="values"><span>Disciplina</span><span>Trabajo en equipo</span><span>Juego limpio</span><span>Manejo de la presión</span><span>Liderazgo</span></div>
+  </section>
+
+  <section id="unete">
+    <div class="join">
+      <div>
+        <div class="eyebrow">Convocatoria abierta</div>
+        <h2 style="margin-top:10px">Arma la escena con nosotros</h2>
+        <p class="muted">No necesitas experiencia, solo ganas. Elige un área y te sumas al equipo que organiza los torneos.</p>
+        <ul class="roles" id="roles"></ul>
+      </div>
+      <div class="contact">
+        <div class="c-row"><div><span>Postula</span><br><a href="https://www.instagram.com/esportspucp/" target="_blank" rel="noopener">Formulario en la bio de @esportspucp</a></div></div>
+        <div class="c-row"><div><span>Discord</span><br><a id="discordLink" target="_blank" rel="noopener"></a></div></div>
+        <div class="c-row"><div><span>Correo</span><br><a id="mailLink"></a></div><button class="copy" type="button" id="copyMail">Copiar</button></div>
+        <div class="c-row"><div><span>Instagram · Threads</span><br><a href="https://www.instagram.com/esportspucp/" target="_blank" rel="noopener">@esportspucp</a></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>e-PUCP · Agrupación estudiantil de esports de la PUCP</span>
+    <span id="updated"></span>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   DATOS DE LA WEB: es lo único que hay que editar para actualizarla.
+   ========================================================= */
+const DATA = {
+  updated: "2026-11-10",
+  contact: {
+    email: "epucp@gmail.com",
+    discord: "https://discord.gg/KSVK2XXW"
+  },
+  events: [
+    { title: "Watchparty · Final de Worlds", kind: "Watchparty LoL", start: "2026-11-14T13:00:00-05:00", end: "2026-11-14T20:00:00-05:00",
+      place: "Salón Z202, PUCP", host: "IEEE Computer Society PUCP · con difusión de e-PUCP",
+      note: "Acceso libre. Sorteos, coffee y concurso de cosplay. Ahí lanzamos la convocatoria e-PUCP." },
+    { title: "Convocatoria e-PUCP", kind: "Reclutamiento", start: "2026-11-14T00:00:00-05:00", end: "2026-11-27T23:59:00-05:00",
+      place: "Online · formulario en la bio de @esportspucp", host: "e-PUCP",
+      note: "Buscamos gente para contenido, eventos, alianzas y gestión." },
+    { title: "Bienvenida al equipo", kind: "Reunión online", start: "2026-12-03T19:00:00-05:00", end: "2026-12-04T23:59:00-05:00",
+      place: "Online", host: "e-PUCP", dateLabel: "3 o 4 dic",
+      note: "30 minutos para conocer las áreas y elegir una tarea." },
+    { title: "Primer torneo del circuito", kind: "Torneo online", start: "2026-12-11T18:00:00-05:00", end: "2026-12-12T23:59:00-05:00",
+      place: "Online · Discord", host: "e-PUCP", dateLabel: "11 o 12 dic",
+      note: "Juego de PC. Lo elige la comunidad en la encuesta de WhatsApp." }
+  ],
+  rotation: [
+    { n: "Torneo 1", plat: "PC", games: ["Valorant (1v1 / 2v2)", "LoL ARAM 5v5"] },
+    { n: "Torneo 2", plat: "Consola", games: ["EA FC (crossplay)", "Smash Bros Ultimate"] },
+    { n: "Torneo 3", plat: "PC", games: ["League of Legends", "CS2 Wingman 2v2"] },
+    { n: "Torneo 4", plat: "Móvil", games: ["Clash Royale", "Brawl Stars / Mobile Legends"] }
+  ],
+  format: [
+    ["Cupos", "16 jugadores o equipos"],
+    ["Bracket", "Eliminación directa · final al mejor de 3"],
+    ["Duración", "2 horas como máximo"],
+    ["Inscripción", "Formulario con correo PUCP"],
+    ["Premios", "Certificado, post del campeón y puntos"]
+  ],
+  points: [["Campeón", 10], ["Finalista", 7], ["Semifinal", 5], ["Cuartos", 3], ["Participación", 1]],
+  ranking: [], // ej.: { name: "Jugador", pts: 10 }
+  kpis: [
+    { v: "1,928", l: "seguidores en Instagram", s: "al 10 nov 2026" },
+    { v: "26", l: "publicaciones", s: "al 10 nov 2026" },
+    { v: "6", l: "aliados con los que hemos trabajado", s: "agrupaciones, facultades y federación" },
+    { v: "2", l: "personas en el equipo núcleo", s: "meta: 10 para dic 2026", goal: 10 }
+  ],
+  history: [
+    { t: "Torneos de Super Smash Bros", d: "Con Ukato no Sekai y GDP" },
+    { t: "Torneo de Clash Royale", d: "Circuito móvil" },
+    { t: "Torneo Left 4 Dead 2", d: "Evento temático en el campus" },
+    { t: "Casual Valorant Lobby", d: "Vía Discord" },
+    { t: "Torneo universitario de LoL", d: "Con IEEE Computer Society PUCP" },
+    { t: "Clasificatoria Open Esports Student Games", d: "Con la Federación Peruana de Esports" },
+    { t: "Gestionadas 2025 · Esports", d: "Con CEGAD" },
+    { t: "E-Games", d: "Con Comunica" }
+  ],
+  allies: ["IEEE Computer Society PUCP", "CEGAD", "Ukato no Sekai", "GDP", "Comunica", "Federación Peruana de Esports"],
+  road: [
+    { when: "Nov 2026", t: "Convocatoria", d: "Lanzamiento en la watchparty de Worlds." },
+    { when: "Dic 2026", t: "Equipo + primer torneo", d: "Bienvenida al núcleo y arranque del circuito online." },
+    { when: "Verano 2027", t: "Circuito y reconocimiento", d: "Torneos quincenales y renovación del reconocimiento oficial." },
+    { when: "2027-1", t: "Liga interna PUCP", d: "Temporada por equipos, presencial y online, y primeros sponsors." },
+    { when: "2027-2", t: "Equipos representativos", d: "Entrenamiento y torneos universitarios nacionales." }
+  ],
+  roles: [
+    ["Contenido", "Diseño en Canva, reels y redes."],
+    ["Eventos", "Brackets, arbitraje y host de torneos."],
+    ["Alianzas", "Facultades, agrupaciones y marcas."],
+    ["Gestión", "Planificación y trámites de la agrupación."]
+  ]
+};
+
+/* ========================= render ========================= */
+const $ = id => document.getElementById(id);
+const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmtDay = iso => new Date(iso).toLocaleDateString("es-PE", { day: "numeric", month: "short", timeZone: "America/Lima" }).replace(".", "");
+const fmtTime = iso => new Date(iso).toLocaleTimeString("es-PE", { hour: "numeric", minute: "2-digit", timeZone: "America/Lima" });
+
+function status(ev, now) {
+  const s = new Date(ev.start), e = new Date(ev.end);
+  if (now > e) return "done";
+  if (now >= s) return "now";
+  return "soon";
+}
+
+function renderAgenda() {
+  const now = new Date();
+  const evs = DATA.events.map(e => ({ ...e, st: status(e, now) }));
+  const firstSoon = evs.find(e => e.st === "soon");
+  if (firstSoon) firstSoon.st = "next";
+  const labels = { done: "Terminado", now: "En curso", next: "Próximo", soon: "Programado" };
+  const tl = $("timeline");
+  evs.forEach(e => {
+    const sameDay = fmtDay(e.start) === fmtDay(e.end);
+    const date = e.dateLabel || (sameDay ? fmtDay(e.start) : fmtDay(e.start) + " – " + fmtDay(e.end));
+    const row = el("div", "ev " + e.st);
+    row.innerHTML = `<div class="date">${esc(date)}</div>
+      <div><h3>${esc(e.title)}</h3><p>${esc(e.place)} · ${esc(e.host)}</p></div>
+      <span class="chip ${e.st}">${labels[e.st]}</span>`;
+    tl.appendChild(row);
+  });
+  const hero = evs.find(e => e.st === "now" && e.kind !== "Reclutamiento") || evs.find(e => e.st === "next") || evs.find(e => e.st === "now");
+  if (!hero) { $("nextTitle").textContent = "Nuevas fechas muy pronto"; $("count").hidden = true; $("nextState").hidden = true; return; }
+  $("nextKind").textContent = hero.kind;
+  $("nextTitle").textContent = hero.title;
+  const sameDay = fmtDay(hero.start) === fmtDay(hero.end);
+  const when = hero.dateLabel || (sameDay ? `${fmtDay(hero.start)} · ${fmtTime(hero.start)} – ${fmtTime(hero.end)}` : `${fmtDay(hero.start)} – ${fmtDay(hero.end)}`);
+  $("nextMeta").innerHTML = `<dt>Cuándo</dt><dd>${esc(when)}</dd><dt>Dónde</dt><dd>${esc(hero.place)}</dd><dt>Organiza</dt><dd>${esc(hero.host)}</dd>`;
+  $("nextNote").textContent = hero.note;
+  const target = new Date(hero.st === "now" ? hero.end : hero.start);
+  $("nextState").innerHTML = hero.st === "now" ? "<i></i>En curso" : "<i></i>Faltan";
+  const tick = () => {
+    let ms = Math.max(0, target - new Date());
+    const d = Math.floor(ms / 864e5); ms -= d * 864e5;
+    const h = Math.floor(ms / 36e5); ms -= h * 36e5;
+    const m = Math.floor(ms / 6e4); ms -= m * 6e4;
+    const s = Math.floor(ms / 1e3);
+    [["cd-d", d], ["cd-h", h], ["cd-m", m], ["cd-s", s]].forEach(([id, v]) => $(id).textContent = String(v).padStart(2, "0"));
+  };
+  tick(); setInterval(tick, 1000);
+}
+
+function renderTorneos() {
+  DATA.rotation.forEach(r => {
+    const c = el("div", "slot");
+    c.innerHTML = `<span class="n">${esc(r.n)}</span><span class="plat">${esc(r.plat)}</span><ul>${r.games.map(g => `<li>${esc(g)}</li>`).join("")}</ul>`;
+    $("rotation").appendChild(c);
+  });
+  $("format").innerHTML = DATA.format.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("");
+  $("points").innerHTML = DATA.points.map(([k, v]) => `<tr><td>${esc(k)}</td><td class="num">${v}</td></tr>`).join("");
+  if (!DATA.ranking.length) {
+    $("ranking").innerHTML = `<div class="empty">El ranking empieza con el primer torneo del circuito, en diciembre. ¿Quieres ser el primer nombre de la tabla?</div>`;
+  } else {
+    const rows = [...DATA.ranking].sort((a, b) => b.pts - a.pts).slice(0, 10)
+      .map((r, i) => `<tr><td>${i + 1}</td><td>${esc(r.name)}</td><td class="num">${r.pts}</td></tr>`).join("");
+    $("ranking").innerHTML = `<table><thead><tr><th>#</th><th>Jugador</th><th style="text-align:right">Pts</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+}
+
+function renderCrecimiento() {
+  $("kpiDate").textContent = "Datos públicos de la agrupación, actualizados al " + fmtDay(DATA.updated + "T12:00:00-05:00") + " de 2026.";
+  DATA.kpis.forEach(k => {
+    const c = el("div", "kpi");
+    let bar = "";
+    if (k.goal) { const pct = Math.min(100, Math.round(parseInt(k.v, 10) / k.goal * 100)); bar = `<div class="prog" role="img" aria-label="${pct}% de la meta"><i style="width:${pct}%"></i></div>`; }
+    c.innerHTML = `<b>${esc(k.v)}</b><span>${esc(k.l)}</span>${bar}<small>${esc(k.s)}</small>`;
+    $("kpis").appendChild(c);
+  });
+  DATA.history.forEach(h => $("history").appendChild(el("div", "h-item", `<b>${esc(h.t)}</b><p>${esc(h.d)}</p>`)));
+  DATA.allies.forEach(a => $("allies").appendChild(el("span", "ally", esc(a))));
+}
+
+function renderRuta() {
+  const now = new Date();
+  const ends = ["2026-11-30", "2026-12-31", "2027-03-31", "2027-07-31", "2027-12-31"];
+  let active = ends.findIndex(d => now <= new Date(d + "T23:59:59-05:00"));
+  DATA.road.forEach((p, i) => $("road").appendChild(el("div", "phase" + (i === active ? " on" : ""), `<span class="when">${esc(p.when)}${i === active ? " · ahora" : ""}</span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p>`)));
+}
+
+function renderUnete() {
+  $("roles").innerHTML = DATA.roles.map(([k, v]) => `<li><b>${esc(k)}</b><span>${esc(v)}</span></li>`).join("");
+  const d = $("discordLink"); d.href = DATA.contact.discord; d.textContent = DATA.contact.discord.replace("https://", "");
+  $("discordBtn").href = DATA.contact.discord; $("discordBtn").target = "_blank"; $("discordBtn").rel = "noopener";
+  const m = $("mailLink"); m.href = "mailto:" + DATA.contact.email; m.textContent = DATA.contact.email;
+  $("copyMail").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(DATA.contact.email); $("copyMail").textContent = "Copiado"; }
+    catch { $("copyMail").textContent = "Cópialo a mano"; }
+    setTimeout(() => $("copyMail").textContent = "Copiar", 2000);
+  });
+  $("updated").textContent = "Actualizado: " + fmtDay(DATA.updated + "T12:00:00-05:00") + " 2026";
+}
+
+renderAgenda(); renderTorneos(); renderCrecimiento(); renderRuta(); renderUnete();
+</script>
+</body>
+</html>
