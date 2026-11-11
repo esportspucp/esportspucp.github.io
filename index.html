@@ -291,7 +291,7 @@ const DATA = {
   events: [
     { title: "Watchparty · Final de Worlds", kind: "Watchparty LoL", start: "2026-11-14T13:00:00-05:00", end: "2026-11-14T20:00:00-05:00",
       place: "Salón Z202, PUCP", host: "IEEE Computer Society PUCP · con difusión de e-PUCP",
-      note: "Acceso libre. Sorteos, coffee y concurso de cosplay. Ahí lanzamos la convocatoria e-PUCP." },
+      note: "Acceso libre. Sorteos, coffee y concurso de cosplay. Ahí lanzamos la convocatoria e-PUCP.", link: "https://luma.com/z0awdrc7", linkLabel: "Regístrate en Luma" },
     { title: "Convocatoria e-PUCP", kind: "Reclutamiento", start: "2026-11-14T00:00:00-05:00", end: "2026-11-27T23:59:00-05:00",
       place: "Online · formulario en la bio de @esportspucp", host: "e-PUCP",
       note: "Buscamos gente para contenido, eventos, alianzas y gestión." },
@@ -375,7 +375,7 @@ function renderAgenda() {
     const date = e.dateLabel || (sameDay ? fmtDay(e.start) : fmtDay(e.start) + " – " + fmtDay(e.end));
     const row = el("div", "ev " + e.st);
     row.innerHTML = `<div class="date">${esc(date)}</div>
-      <div><h3>${esc(e.title)}</h3><p>${esc(e.place)} · ${esc(e.host)}</p></div>
+      <div><h3>${esc(e.title)}</h3><p>${esc(e.place)} · ${esc(e.host)}</p>${e.link ? `<p><a href="${esc(e.link)}" target="_blank" rel="noopener">${esc(e.linkLabel || "Más info")} →</a></p>` : ""}</div>
       <span class="chip ${e.st}">${labels[e.st]}</span>`;
     tl.appendChild(row);
   });
@@ -387,6 +387,7 @@ function renderAgenda() {
   const when = hero.dateLabel || (sameDay ? `${fmtDay(hero.start)} · ${fmtTime(hero.start)} – ${fmtTime(hero.end)}` : `${fmtDay(hero.start)} – ${fmtDay(hero.end)}`);
   $("nextMeta").innerHTML = `<dt>Cuándo</dt><dd>${esc(when)}</dd><dt>Dónde</dt><dd>${esc(hero.place)}</dd><dt>Organiza</dt><dd>${esc(hero.host)}</dd>`;
   $("nextNote").textContent = hero.note;
+  if (hero.link) { const a = el("a", "btn primary"); a.href = hero.link; a.target = "_blank"; a.rel = "noopener"; a.textContent = hero.linkLabel || "Más info"; a.style.justifySelf = "start"; $("nextNote").after(a); }
   const target = new Date(hero.st === "now" ? hero.end : hero.start);
   $("nextState").innerHTML = hero.st === "now" ? "<i></i>En curso" : "<i></i>Faltan";
   const tick = () => {
