@@ -82,9 +82,6 @@ nav a:hover{color:var(--text)}
 .chip{font:400 .62rem var(--pixel);padding:5px 8px;border-radius:4px;border:1px solid currentColor;white-space:nowrap}
 .chip.now{color:var(--ok)} .chip.next{color:var(--magenta)} .chip.soon{color:var(--muted)} .chip.done{color:var(--muted)}
 @media (max-width:600px){.ev{grid-template-columns:1fr;gap:6px}.ev .chip{justify-self:start}}
-.rot{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-@media (max-width:860px){.rot{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:440px){.rot{grid-template-columns:1fr}}
 .slot{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;display:grid;gap:8px;align-content:start}
 .slot .n{font:400 .68rem var(--pixel);color:var(--muted)}
 .slot h3{color:var(--text)}
@@ -160,6 +157,27 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--disp
 .chart .tip span{color:var(--muted)}
 .chart details{margin-top:8px;font-size:.85rem;color:var(--muted)}
 .chart summary{cursor:pointer;font:400 .6rem var(--pixel)}
+/* plataformas y votación */
+.plats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:860px){.plats{grid-template-columns:1fr}}
+.plat{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--cyan);border-radius:10px;padding:16px;display:grid;gap:10px;align-content:start}
+.plat-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.plat-head h3{font-size:1.3rem;letter-spacing:.06em;text-transform:uppercase;color:var(--cyan)}
+.plat-head span{font:400 .62rem var(--pixel);color:var(--muted)}
+.game{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:7px}
+.g-top{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.g-top b{font:600 .98rem var(--display)}
+.g-top small{display:block;color:var(--muted);font-size:.8rem}
+.chip.test{color:var(--warn);font-size:.55rem;padding:2px 6px;margin-left:4px;vertical-align:2px}
+.vote{flex:none;background:none;border:1px solid var(--magenta);color:var(--magenta);border-radius:4px;padding:6px 10px;font:600 .78rem var(--display);cursor:pointer;transition:background .15s ease}
+.vote:hover{background:rgba(255,63,164,.12)}
+.vote.on{border-color:var(--ok);color:var(--ok);cursor:default;background:none}
+.g-bar{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.track{height:6px;background:var(--ink);border-radius:3px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--magenta);border-radius:3px;transition:width .4s ease}
+.g-bar span{font:600 .8rem var(--display);font-variant-numeric:tabular-nums;color:var(--text);min-width:2ch;text-align:right}
+.plats.novotes .g-bar,.plats.novotes .plat-head span{display:none}
+.vote-note{margin:12px 0 0;font-size:.88rem}
 footer{padding:48px 0 40px;color:var(--muted);font-size:.85rem}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:20px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -217,10 +235,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   <section id="torneos">
     <div class="sec-head">
       <div class="eyebrow">Circuito e-PUCP</div>
-      <h2>Torneos rotativos, todo online</h2>
-      <p>Cada torneo cambia de plataforma y en cada vuelta cambia el juego. Queremos activar la comunidad y conocer a los jugadores de la Católica: arma tu equipo, compite por premios en efectivo y suma puntos en el ranking e-PUCP.</p>
+      <h2>Torneos online en PC, consola y móvil</h2>
+      <p>Jugamos con la modalidad competitiva clásica de cada juego. Queremos activar la comunidad y conocer a los jugadores de la Católica: marca los juegos que te interesan y los más votados son los que jugamos primero.</p>
     </div>
-    <div class="rot" id="rotation"></div>
+    <div class="plats novotes" id="platforms"></div>
+    <p class="vote-note muted" id="voteNote"></p>
     <div class="split">
       <div class="box">
         <h3>Formato</h3>
@@ -332,20 +351,42 @@ const DATA = {
       note: "30 minutos para conocer las áreas y elegir una tarea." },
     { title: "Primer torneo del circuito", kind: "Torneo online", start: "2026-12-11T18:00:00-05:00", end: "2026-12-12T23:59:00-05:00",
       place: "Online · Discord", host: "e-PUCP", dateLabel: "11 o 12 dic",
-      note: "Juego de PC. Lo elige la comunidad en la encuesta de WhatsApp." }
+      note: "Juego de PC. Lo elige la comunidad: vota en la sección Torneos." }
   ],
-  rotation: [
-    { n: "Torneo 1", plat: "PC", games: ["Valorant (1v1 / 2v2)", "LoL ARAM 5v5"] },
-    { n: "Torneo 2", plat: "Consola", games: ["EA FC (crossplay)", "Smash Bros Ultimate"] },
-    { n: "Torneo 3", plat: "PC", games: ["League of Legends", "CS2 Wingman 2v2"] },
-    { n: "Torneo 4", plat: "Móvil", games: ["Clash Royale", "Brawl Stars / Mobile Legends"] }
+  // Votación de juegos: pega aquí la URL de la aplicación web de Apps Script (termina en /exec).
+  votes: { endpoint: "" },
+  // Juegos por plataforma. test: true = "Por probar" (esports menos jugados para medir interés).
+  // Los id deben coincidir con la lista ALLOWED del Apps Script.
+  platforms: [
+    { id: "pc", name: "PC", games: [
+      { id: "lol", name: "League of Legends", mode: "5v5 · Bo1" },
+      { id: "valorant", name: "Valorant", mode: "5v5 · Bo1" },
+      { id: "cs2", name: "Counter-Strike 2", mode: "5v5 · Bo1" },
+      { id: "dota2", name: "Dota 2", mode: "5v5 · Bo1" },
+      { id: "r6", name: "Rainbow Six Siege", mode: "5v5 · Bo1", test: true }
+    ]},
+    { id: "consola", name: "Consola", games: [
+      { id: "eafc", name: "EA Sports FC", mode: "1v1 · Bo1" },
+      { id: "smash", name: "Super Smash Bros. Ultimate", mode: "1v1 · Bo1" },
+      { id: "tekken8", name: "Tekken 8", mode: "1v1 · Bo1" },
+      { id: "sf6", name: "Street Fighter 6", mode: "1v1 · Bo1", test: true },
+      { id: "rocketleague", name: "Rocket League", mode: "3v3 · Bo1", test: true }
+    ]},
+    { id: "movil", name: "Móvil", games: [
+      { id: "clashroyale", name: "Clash Royale", mode: "1v1 · Bo1" },
+      { id: "mlbb", name: "Mobile Legends: Bang Bang", mode: "5v5 · Bo1" },
+      { id: "freefire", name: "Free Fire", mode: "Clash Squad 4v4 · Bo1" },
+      { id: "brawlstars", name: "Brawl Stars", mode: "3v3 · Bo1" },
+      { id: "hok", name: "Honor of Kings", mode: "5v5 · Bo1", test: true }
+    ]}
   ],
   format: [
+    ["Plataformas", "PC, consola y móvil"],
+    ["Modalidad", "La competitiva clásica de cada juego · por defecto Bo1 (ej. 5v5 Bo1)"],
+    ["Bracket", "Eliminación directa"],
     ["Cupos", "16 equipos"],
     ["Inscripción", "S/ 5 por persona · equipo de 5 + 1 suplente: S/ 30"],
-    ["Premios", "En efectivo · último torneo: S/ 150 al 1.er puesto y S/ 50 al 2.º"],
-    ["Bracket", "Eliminación directa · final al mejor de 3"],
-    ["Duración", "2 horas como máximo"],
+    ["Premios", "En efectivo para los primeros puestos"],
     ["Registro", "Formulario con correo PUCP"]
   ],
   points: [["Campeón", 10], ["Finalista", 7], ["Semifinal", 5], ["Cuartos", 3], ["Participación", 1]],
@@ -444,11 +485,6 @@ function renderAgenda() {
 }
 
 function renderTorneos() {
-  DATA.rotation.forEach(r => {
-    const c = el("div", "slot");
-    c.innerHTML = `<span class="n">${esc(r.n)}</span><span class="plat">${esc(r.plat)}</span><ul>${r.games.map(g => `<li>${esc(g)}</li>`).join("")}</ul>`;
-    $("rotation").appendChild(c);
-  });
   $("format").innerHTML = DATA.format.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("");
   $("points").innerHTML = DATA.points.map(([k, v]) => `<tr><td>${esc(k)}</td><td class="num">${v}</td></tr>`).join("");
   if (!DATA.ranking.length) {
@@ -566,7 +602,67 @@ function renderUnete() {
   $("updated").textContent = "Actualizado: " + fmtDay(DATA.updated + "T12:00:00-05:00") + " 2026";
 }
 
-renderAgenda(); renderTorneos(); renderTrayectoria(); renderCrecimiento(); renderRuta(); renderUnete();
+/* ===================== votación ===================== */
+const VOTE_KEY = "epucp-votos", VOTER_KEY = "epucp-votante";
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+let voteCounts = {};
+const myVotes = new Set(store.get(VOTE_KEY, []));
+const voterId = (() => { let id = store.get(VOTER_KEY, ""); if (!id) { id = Math.random().toString(36).slice(2) + Date.now().toString(36); store.set(VOTER_KEY, id); } return id; })();
+
+async function callVotes(params) {
+  if (!DATA.votes.endpoint) return null;
+  try {
+    const r = await fetch(DATA.votes.endpoint + "?" + new URLSearchParams(params).toString());
+    const j = await r.json();
+    if (j && j.counts) { voteCounts = j.counts; return j; }
+  } catch {}
+  return null;
+}
+
+function renderPlatforms() {
+  const box = $("platforms");
+  box.innerHTML = "";
+  DATA.platforms.forEach(pl => {
+    const games = pl.games.map((g, i) => ({ ...g, i, n: voteCounts[g.id] || 0 })).sort((a, b) => b.n - a.n || a.i - b.i);
+    const total = games.reduce((t, g) => t + g.n, 0);
+    const max = Math.max(1, ...games.map(g => g.n));
+    const card = el("div", "plat");
+    card.innerHTML = `<div class="plat-head"><h3>${esc(pl.name)}</h3><span>${fmtNum(total)} votos</span></div>` +
+      games.map(g => {
+        const mine = myVotes.has(g.id);
+        return `<div class="game">
+          <div class="g-top"><div><b>${esc(g.name)}</b>${g.test ? '<span class="chip test">Por probar</span>' : ""}<small>${esc(g.mode)}</small></div>
+          <button class="vote${mine ? " on" : ""}" data-id="${esc(g.id)}" type="button"${mine ? " disabled" : ""}>${mine ? "Votaste ✓" : "Me interesa"}</button></div>
+          <div class="g-bar"><div class="track"><i style="width:${(g.n / max * 100).toFixed(1)}%"></i></div><span>${fmtNum(g.n)}</span></div>
+        </div>`;
+      }).join("");
+    box.appendChild(card);
+  });
+  box.querySelectorAll(".vote:not(.on)").forEach(b => b.addEventListener("click", () => vote(b.dataset.id)));
+}
+
+async function vote(id) {
+  if (!DATA.votes.endpoint) { $("voteNote").textContent = "La votación abre muy pronto. ¡Vuelve en unos días!"; return; }
+  myVotes.add(id); store.set(VOTE_KEY, [...myVotes]);
+  voteCounts[id] = (voteCounts[id] || 0) + 1;
+  renderPlatforms();
+  await callVotes({ vote: id, voter: voterId });
+  renderPlatforms();
+}
+
+async function initVotes() {
+  renderPlatforms();
+  if (!DATA.votes.endpoint) { $("voteNote").textContent = "Marca los juegos que te interesan: los más votados suben primero."; return; }
+  $("platforms").classList.remove("novotes");
+  $("voteNote").textContent = "Votos en vivo, se actualizan cada 20 segundos. Puedes marcar todos los juegos que te interesen.";
+  await callVotes({}); renderPlatforms();
+  setInterval(async () => { if (document.hidden) return; await callVotes({}); renderPlatforms(); }, 20000);
+}
+
+renderAgenda(); renderTorneos(); initVotes(); renderTrayectoria(); renderCrecimiento(); renderRuta(); renderUnete();
 </script>
 </body>
 </html>
