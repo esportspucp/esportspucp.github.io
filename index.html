@@ -188,6 +188,26 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--disp
 .g-bar span{font:600 .8rem var(--display);font-variant-numeric:tabular-nums;color:var(--text);min-width:2ch;text-align:right}
 .plats.novotes .g-bar,.plats.novotes .plat-head span{display:none}
 .vote-note{margin:12px 0 0;font-size:.88rem}
+/* colabora */
+.collab{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:860px){.collab{grid-template-columns:1fr}}
+.c-card{background:linear-gradient(160deg,var(--navy),var(--panel) 75%);border:1px solid var(--line);border-top:3px solid var(--magenta);border-radius:12px;padding:24px;display:grid;gap:14px;align-content:start}
+.c-card.alt{border-top-color:var(--cyan)}
+.c-card h3{font-size:1.45rem}
+.c-card p{margin:0;color:var(--muted)}
+.c-card h4{margin:4px 0 0;font:400 .66rem var(--pixel);color:var(--magenta);letter-spacing:.06em;text-transform:uppercase}
+.c-card.alt h4{color:var(--cyan)}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.checks li{display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:start;font-size:.95rem}
+.checks li::before{content:"";width:8px;height:8px;margin-top:8px;background:var(--magenta);box-shadow:0 0 8px rgba(247,226,7,.5)}
+.c-card.alt .checks li::before{background:var(--cyan);box-shadow:none}
+.offers{display:flex;flex-wrap:wrap;gap:8px}
+.offers span{font:500 .85rem var(--body);padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--ink)}
+.c-meta{font:400 .62rem var(--pixel);color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+.c-stats{display:flex;gap:24px;flex-wrap:wrap}
+.c-stats b{display:block;font:700 1.8rem/1 var(--display);color:var(--text)}
+.c-stats span{font:400 .6rem var(--pixel);color:var(--muted)}
+.c-card .ctas{margin-top:4px}
 footer{padding:48px 0 40px;color:var(--muted);font-size:.85rem}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:20px}
 .foot-brand{display:inline-flex;align-items:center;gap:10px}
@@ -200,7 +220,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   <div class="wrap bar">
     <a class="brand" href="#inicio" aria-label="e-PUCP inicio"><img src="assets/logo-e-pucp-blanco.png" alt="e-PUCP" width="131" height="34"></a>
     <nav aria-label="Secciones">
-      <a href="#agenda">Agenda</a><a href="#torneos">Torneos</a><a href="#trayectoria">Trayectoria</a><a href="#crecimiento">Crecimiento</a><a href="#ruta">Ruta</a><a href="#nosotros">Nosotros</a><a href="#unete">Únete</a>
+      <a href="#agenda">Agenda</a><a href="#torneos">Torneos</a><a href="#trayectoria">Trayectoria</a><a href="#crecimiento">Crecimiento</a><a href="#ruta">Ruta</a><a href="#nosotros">Nosotros</a><a href="#colabora">Colabora</a><a href="#unete">Únete</a>
     </nav>
   </div>
 </header>
@@ -311,6 +331,15 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       <div class="box"><h3>Visión</h3><p>Convertirnos en la principal referencia universitaria de esports en el Perú, consolidando a la PUCP como un espacio de formación integral, innovación y liderazgo que conecte la pasión por los esports con oportunidades académicas, sociales y profesionales.</p></div>
     </div>
     <div class="values"><span>Disciplina</span><span>Trabajo en equipo</span><span>Juego limpio</span><span>Manejo de la presión</span><span>Liderazgo</span></div>
+  </section>
+
+  <section id="colabora">
+    <div class="sec-head">
+      <div class="eyebrow">Colabora</div>
+      <h2>Construyamos la escena juntos</h2>
+      <p>Si tienes un proyecto de esports bien pensado o representas a una marca u organización, aquí empieza la colaboración con e-PUCP.</p>
+    </div>
+    <div class="collab" id="collab"></div>
   </section>
 
   <section id="unete">
@@ -434,6 +463,20 @@ const DATA = {
     { when: "2027-1", t: "Liga interna PUCP", d: "Temporada por equipos, presencial y online, y primeros sponsors." },
     { when: "2027-2", t: "Equipos representativos", d: "Entrenamiento y torneos universitarios nacionales." }
   ],
+  // Sección Colabora: formularios de proyectos y de aliados.
+  collab: {
+    projects: {
+      form: "https://docs.google.com/forms/d/e/1FAIpQLSer43zL2NPA-jIzLMk8tonrB0AfHJw1zrAISMzmGNEfepVUTw/viewform",
+      responseDays: 7,
+      leadWeeks: 3,
+      prepare: ["Fecha propuesta y cronograma con hitos", "Presupuesto estimado y cómo lo financiarías", "Tu equipo y los aliados que te acompañan", "Cómo vas a medir el resultado"],
+      offers: ["Difusión en redes de e-PUCP", "Uso de la marca e-PUCP", "Voluntarios del equipo"]
+    },
+    allies: {
+      form: "https://docs.google.com/forms/d/e/1FAIpQLSfiJBoFEGuJgaMn01ZyOmU4SZwjXFbfRXWUskJmKHFNMaed_A/viewform",
+      ways: ["Patrocinio de torneos y premios", "Aporte en especie: periféricos, internet o espacio", "Activaciones en eventos", "Contenido y streaming", "Convenios y descuentos para la comunidad"]
+    }
+  },
   roles: [
     ["Contenido", "Diseño en Canva, reels y redes."],
     ["Eventos", "Brackets, arbitraje y host de torneos."],
@@ -673,7 +716,34 @@ async function initVotes() {
   setInterval(async () => { if (document.hidden) return; await callVotes({}); renderPlatforms(); }, 20000);
 }
 
-renderAgenda(); renderTorneos(); initVotes(); renderTrayectoria(); renderCrecimiento(); renderRuta(); renderUnete();
+function renderColabora() {
+  const P = DATA.collab.projects, A = DATA.collab.allies;
+  const followers = (DATA.kpis[0] || {}).v || "";
+  $("collab").innerHTML = `
+    <article class="c-card">
+      <div class="eyebrow">Estudiantes y agrupaciones</div>
+      <h3>¿Tienes un proyecto? Propónlo</h3>
+      <p>Si tienes una idea de esports bien desarrollada, te ayudamos a hacerla realidad. Somos un equipo pequeño, así que revisamos cada propuesta con una rúbrica y priorizamos las más completas.</p>
+      <h4>Antes de postular, ten listo</h4>
+      <ul class="checks">${P.prepare.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+      <h4>Lo que podemos aportar</h4>
+      <div class="offers">${P.offers.map(t => `<span>${esc(t)}</span>`).join("")}</div>
+      <div class="c-meta">Postula con al menos ${P.leadWeeks} semanas de anticipación · Toma 20–30 min · Respondemos en máximo ${P.responseDays} días hábiles</div>
+      <div class="ctas"><a class="btn primary" href="${esc(P.form)}" target="_blank" rel="noopener">Propón tu proyecto</a></div>
+    </article>
+    <article class="c-card alt">
+      <div class="eyebrow" style="color:var(--cyan)">Marcas y organizaciones</div>
+      <h3>Sé aliado de e-PUCP</h3>
+      <p>Conecta tu marca con la comunidad gamer de la Pontificia Universidad Católica del Perú a través de torneos, eventos y contenido.</p>
+      <div class="c-stats">${followers ? `<div><b>${esc(followers)}</b><span>seguidores en IG</span></div>` : ""}<div><b>${DATA.history.length}</b><span>actividades realizadas</span></div><div><b>${DATA.allies.length}</b><span>aliados</span></div></div>
+      <h4>Formas de colaborar</h4>
+      <ul class="checks">${A.ways.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+      <div class="c-meta">Ya trabajamos con ${esc(DATA.allies.join(" · "))}</div>
+      <div class="ctas"><a class="btn primary" href="${esc(A.form)}" target="_blank" rel="noopener">Quiero ser aliado</a><a class="btn ghost" href="#crecimiento">Ver cómo vamos</a></div>
+    </article>`;
+}
+
+renderAgenda(); renderTorneos(); initVotes(); renderColabora(); renderTrayectoria(); renderCrecimiento(); renderRuta(); renderUnete();
 </script>
 </body>
 </html>
